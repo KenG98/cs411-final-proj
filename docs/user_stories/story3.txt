@@ -1,0 +1,11 @@
+Logged-in user Home Page
+
+If a logged in user returns to the web app, or if a non-logged-in user logs in, they’ll be taken to the logged-in user home page. This page will have:
+
+* The same movie search bar.
+* A list of your liked movies, imported from Facebook.
+* A list of watched movies and ratings you enter manually.
+* A list of movies you’d like to see.
+* A “get movie recommendation” button with an “advanced” button.
+
+Entering text into the search bar pulls up results as before, except now there’s an “add to seem-list” or “add to watch-list”, and will prompt the user for a 1-5 star rating (Story 5) to see if they liked it or not.

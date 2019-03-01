@@ -1,0 +1,3 @@
+Home Page
+
+As a user, when I visit the website, I should be able to immediately start searching for movies and adding them to a list, whether I’m logged in or not. I should be able to click a “recommend me” button and see a list of recommended movies. I should be able to click on a movie thumbnail or title and be taken to an imdb page for the movie. In addition, I should be able to click on links that take me to the movie page on youtube or netflix, where I can rent the movie.
