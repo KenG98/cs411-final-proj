@@ -1,0 +1,18 @@
+html
+	head
+		title Search
+	body
+		input(type='text', id='search-field')
+		button(type='button', id='search-button', onclick='doSearch()', value='Search') Search
+		if searchresult
+			p Title #{searchresult.Title}
+			p Year #{searchresult.Year}
+			p Genre #{searchresult.Genre}
+			p Director #{searchresult.Director}
+		script.
+			function doSearch() {
+				moviename = document.getElementById('search-field').value
+				location.href = "/search?moviename=" + moviename
+			}
+
+
