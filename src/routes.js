@@ -19,10 +19,11 @@ module.exports = function(app) {
   		request(
   			'http://www.omdbapi.com/?t=' + movieName + '&apiKey=' + process.env.OMDB_API_KEY, 
   			(error, response, body) => {
-  				console.log(body)
+					body = JSON.parse(body)
+					console.log(body);
   				res.render('search', {
   					moviename: movieName,
-  					searchresult: JSON.parse(body)
+  					searchresult: body
   				})
   			});
   	} else {

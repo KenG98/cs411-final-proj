@@ -1,0 +1,23 @@
+* {
+	font-family: arial; /* change font for whole page */
+}
+
+h1 {
+	text-align: center;
+}
+
+form {
+	width:700px;
+	margin:25px auto;
+}
+
+.search {
+	width: 600px;
+}
+
+.button {
+	padding:6px 15px;
+	border:2px solid #207cca;
+	background-color:#207cca;
+	color:#fafafa;
+}
