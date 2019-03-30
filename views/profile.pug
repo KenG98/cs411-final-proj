@@ -1,0 +1,11 @@
+html
+	head
+		title Profile    
+	body
+		h1 Your Profile
+		if user
+			h2 Hello, #{user.displayName}.
+		else
+			h2 Please log in to view your profile.
+			a(href="/login/facebook") Click here to log in with Facebook
+		

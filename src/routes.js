@@ -1,6 +1,19 @@
-var request = require('request');
+const request = require('request');
+const fbAuth = require('./facebook_auth.js')
 
 module.exports = function(app) {
+  // useful middleware for express
+  app.use(require('morgan')('combined'));
+  app.use(require('cookie-parser')());
+  app.use(require('body-parser')
+    .urlencoded({ extended: true }));
+  app.use(require('express-session')({
+    secret: 'keyboard cat', 
+    resave: true, 
+    saveUninitialized: true
+  }));
+
+  fbAuth.setup(app)
   
   app.get('/', function(req, res) {
     res.render('index', {
@@ -31,5 +44,14 @@ module.exports = function(app) {
   	}
   })
 
+  app.get('/profile',function(req, res) {
+    console.log("USER", req.user)
+    if (req.user) {
+      res.render('profile', {user: req.user})
+    }
+    else {
+      res.render('profile')
+    }
+  })
+  
 }
-
