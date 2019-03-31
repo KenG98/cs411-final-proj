@@ -1,5 +1,7 @@
+
 const request = require('request');
 const fbAuth = require('./facebook_auth.js')
+const mongoDB = require('./db')
 
 module.exports = function(app) {
   // useful middleware for express
@@ -13,15 +15,17 @@ module.exports = function(app) {
     saveUninitialized: true
   }));
 
+  mongoDB.setup(app)  
   fbAuth.setup(app)
-  
+  console.log("******&&**")
+
   app.get('/', function(req, res) {
     res.render('index', {
       randnum: Math.floor(Math.random()*100),
       message: process.env.OTHER_CONFIG,
     })
   })
-
+  
   app.get('/other', function(req, res) {
     res.render('testpage')
   })
@@ -46,6 +50,7 @@ module.exports = function(app) {
 
   app.get('/profile',function(req, res) {
     console.log("USER", req.user)
+    
     if (req.user) {
       res.render('profile', {user: req.user})
     }
@@ -53,5 +58,7 @@ module.exports = function(app) {
       res.render('profile')
     }
   })
+
+
   
 }
