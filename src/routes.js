@@ -15,9 +15,9 @@ module.exports = function(app) {
     saveUninitialized: true
   }));
 
-  mongoDB.setup(app)  
-  fbAuth.setup(app)
-  console.log("******&&**")
+  mongoDB.setup(app)   // give route to modle mongoDB,express app
+  fbAuth.setup(app)  // pass function from db.js
+  
 
   app.get('/', function(req, res) {
     res.render('index', {
@@ -59,6 +59,4 @@ module.exports = function(app) {
     }
   })
 
-
-  
 }

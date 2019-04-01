@@ -9,6 +9,4 @@ var schema = new Schema({
     
 });
 
-
-// modules base on Schema
 module.exports = mongoose.model('Product', schema); // specify name(Movie) of the model

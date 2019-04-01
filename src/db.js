@@ -1,7 +1,6 @@
 // database logic goes here
 const Product = require('../models/movie');
 const mongoose = require('mongoose');
-var app = require('../index')
 
 mongoose.connect('mongodb://localhost:27017/Movies', { useNewUrlParser: true } );
 
