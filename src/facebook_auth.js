@@ -34,6 +34,8 @@ function setup(app) {
   app.use(passport.initialize())
   app.use(passport.session())
 
+
+
   app.get('/login/facebook',
     passport.authenticate('facebook', {
     	failureRedirect: '/profile',
@@ -46,5 +48,6 @@ function setup(app) {
     	failureRedirect: '/profile',
     	successRedirect: '/profile',
     	// scope: ["id", "email", "displayName"]
-    }))
+		}))
+		
 }
