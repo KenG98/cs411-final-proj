@@ -34,13 +34,14 @@ module.exports = function(app) {
   	let movieName = req.query.moviename
   	if (movieName) {
   		request(
-  			'http://www.omdbapi.com/?t=' + movieName + '&apiKey=' + process.env.OMDB_API_KEY, 
+  			'http://www.omdbapi.com/?s=' + movieName + '&apiKey=' + process.env.OMDB_API_KEY, 
   			(error, response, body) => {
 					body = JSON.parse(body)
-					console.log(body);
+				  listOfMovies = body.Search
+					console.log(listOfMovies);
   				res.render('search', {
   					moviename: movieName,
-  					searchresult: body
+  					searchresult: listOfMovies
   				})
   			});
   	} else {

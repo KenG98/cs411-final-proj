@@ -21,3 +21,21 @@ form {
 	background-color:#207cca;
 	color:#fafafa;
 }
+
+/* https://stackoverflow.com/a/5198514/10634812 */
+.movie-info {
+	margin: 50px 0px;
+	overflow: auto;
+}
+
+.movie-poster {
+	display: block;
+}
+
+.movie-poster img {
+	float: left;
+}
+
+.movie-details {
+	margin-left: 340px;
+}
