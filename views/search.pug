@@ -47,7 +47,10 @@ html
 			script.	
 				function addToWatchList(movieTitle, movieID) {
 					console.log("Add to watch list", movieTitle, movieID)
-					console.log("Not yet implemented...")
+					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
+						console.log("Request is done. Returned:", data)
+					})
+					
 				}
 				function addToSeenList(movieTitle, movieID) {
 					console.log("Add to seen list", movieTitle, movieID)

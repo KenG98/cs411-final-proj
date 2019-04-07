@@ -7,6 +7,15 @@ html
 		h1 Your Profile
 		if user
 			h2 Hello, #{user.displayName}.
+			if user.watchList
+				p= "Your moive list:"
+				ul 
+					each movieInList in user.watchList
+						li = movieInList.name	
+			else 
+				p= "Go ahead and choose the movie you want to wantch"
+				
+
 			if user.seenMovies
 				p= "You've seen:"
 				ul
@@ -17,3 +26,4 @@ html
 		else
 			h2 Please log in to view your profile.
 			a(href="/login/facebook") Click here to log in with Facebook
+		

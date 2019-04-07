@@ -1,11 +1,11 @@
 
 const request = require('request');
 const fbAuth = require('./facebook_auth.js')
-const mongoDB = require('./db')
+const mongoDB = require('./db') // require db to routes.js
 
 module.exports = function(app) {
   // useful middleware for express
-  app.use(require('morgan')('combined'));
+  app.use(require('morgan')('combined')); 
   app.use(require('cookie-parser')());
   app.use(require('body-parser')
     .urlencoded({ extended: true }));
@@ -79,4 +79,17 @@ module.exports = function(app) {
     }  
   })
 
+  app.get('/api/toWatchList', (req, res) => {
+    if(req.user && req.query.movieName && req.query.movieID) {
+      mongoDB.toWatchList(req.user.id, req.query.movieName, req.query.movieID)
+      res.sendStatus(200)
+    } 
+    else {
+      res.sendStatus(400)
+    } 
+  
+  })
+
 }
+
+
