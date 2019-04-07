@@ -1,30 +1,63 @@
 // database logic goes here
-const Product = require('../models/movie');
+// const Product = require('../models/movie');
 const mongoose = require('mongoose');
+const userModel = require('../models/user.js')
 
 mongoose.connect('mongodb://localhost:27017/Movies', { useNewUrlParser: true } );
 
 module.exports = {  // pass to routes
-	setup
+	setup,
+  addUser,
+  addSeenMovie,
+  getUser
 }
 
-var films = new Product({ 
-    title: 'Stars War',
-    year: '00000000000',
-    genre: 'action',
-    director: 'Ken'
-});
+function setup(app) {
+    // app.get('/movie', function(req, res) {
+    //     Product.find(function(err, movie) {
+    //         res.render('movie', {title: 'Movie U LOVE', products: movie})
+    //     })
+    // })
+}
 
-films.save().then({ // same model to our mongoDB
-    if(err) {
-        return err;
-    }   
-});  
+function getUser(usrId, done) {
+  userModel.findOne({"_id": usrId}, (err, usr) => done(err, usr))
+  // userModel.findOne({"_id": usrId}, (err, usr) => {
+  //   if (usr) {
+  //     return usr
+  //   }
+  //   else {
+  //     return null
+  //   }
+  // })
+}
 
-function setup(app) { // get movie info for clients
-    app.get('/movie', function(req, res) {
-        Product.find(function(err, movie) {
-            res.render('movie', {title: 'Movie U LOVE', products: movie})
-        })
+function addSeenMovie(userId, movieTitle, movieID) {
+  userModel.findOne({"_id": userId}, (err, usr) => {
+    usr.seenMovies.push({
+      name: movieTitle,
+      imdbID: movieID
     })
+    userModel(usr).save((err) => {
+      if (err) throw err
+    })
+  })
+}
+
+function addUser(userObj) {
+  userModel.findOne({"_id": userObj.id}, (err, usr) => {
+    if (usr) {
+      console.log("User " + usr + " has returned.")
+    }
+    else {
+      console.log("Adding user " + userObj + " to database.")
+      let thisUser = new userModel({
+        displayName: userObj.displayName,
+        _id: userObj.id,
+      })
+      thisUser.save((err) => {
+        if (err) throw err
+      })    
+    } 
+  })
 }

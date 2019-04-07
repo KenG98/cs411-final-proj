@@ -1,4 +1,5 @@
 require('dotenv').config()
+const db = require('./db.js')
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const users = {}
@@ -25,6 +26,8 @@ passport.use(
 		// profileFields: ["id", "email", "displayName"]
 	}, 
 	function(accessToken, refreshToken, profile, done) {
+    console.log("USER LOGGED IN:", profile)
+    db.addUser(profile)
 		users[profile.id] = profile
 		return done(null, profile)
 	}))	
@@ -33,8 +36,6 @@ function setup(app) {
 
   app.use(passport.initialize())
   app.use(passport.session())
-
-
 
   app.get('/login/facebook',
     passport.authenticate('facebook', {

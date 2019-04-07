@@ -41,23 +41,42 @@ module.exports = function(app) {
 					console.log(listOfMovies);
   				res.render('search', {
   					moviename: movieName,
-  					searchresult: listOfMovies
+  					searchresult: listOfMovies,
+            user: req.user
   				})
   			});
   	} else {
-  		res.render('search', {moviename: movieName})
+  		res.render('search', {
+        moviename: movieName,
+        user: req.user
+      })
   	}
   })
 
   app.get('/profile',function(req, res) {
-    console.log("USER", req.user)
-    
     if (req.user) {
-      res.render('profile', {user: req.user})
+      mongoDB.getUser(req.user.id, (err, usr) => {
+        if (err) {
+          throw err
+        }
+        else {
+          res.render('profile', {user: usr})
+        }
+      })
     }
     else {
       res.render('profile')
     }
+  })
+
+  app.get('/api/addSeenMovie', (req, res) => {
+    if (req.user && req.query.movieName && req.query.movieID) {
+      mongoDB.addSeenMovie(req.user.id, req.query.movieName, req.query.movieID)
+      res.sendStatus(200)
+    }
+    else {
+      res.sendStatus(400)
+    }  
   })
 
 }

@@ -6,7 +6,6 @@ var schema = new Schema({
     year: {type: String, required: true},
     genre: { type: String, required: true},
     director: {type: String, required: true},
-    
 });
 
 module.exports = mongoose.model('Product', schema); // specify name(Movie) of the model

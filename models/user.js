@@ -1,9 +1,11 @@
 var mongoose = require ('mongoose');
-var Schrma = mongoose.Schema; 
-// schema for users' login
+var Schema = mongoose.Schema; 
+
 var userSchema = new Schema ({
-    email: {type: String, required: true},
-    password: {type: String, required: true }
+  displayName: {type: String, required: true},
+  _id: {type: String, required: true},
+  seenMovies: [{name: String, imdbID: String}],
+  watchList: [{name: String, imdbID: String}]
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('user', userSchema);

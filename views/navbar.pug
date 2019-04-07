@@ -1,0 +1,9 @@
+a(href="/profile")
+	h3= "Profile"
+a(href="/search")
+	h3= "Search"
+if user
+	h3= "Hello " + user.displayName
+else
+	a(href="/login/facebook")
+		h3= "Log In"
