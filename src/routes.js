@@ -79,7 +79,7 @@ module.exports = function(app) {
     }  
   })
 
-  app.get('/api/toWatchList', (req, res) => {
+  app.get('/api/addToWatchList', (req, res) => {
     if(req.user && req.query.movieName && req.query.movieID) {
       mongoDB.toWatchList(req.user.id, req.query.movieName, req.query.movieID)
       res.sendStatus(200)
