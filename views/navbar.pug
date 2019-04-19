@@ -1,16 +1,24 @@
 nav(class='navbar navbar-default')
 	div(class="container-fluid")
 		div(class='navbar-header')
-			if user
-				a(class="navbar-brand" href="/profile")= "Hello " + user.displayName
-			else			
-				a(class="navbar-brand" href="/")="Movies"
+			a(class="navbar-brand" href="/")
+				span(class="glyphicon glyphicon-film")
+				="  Movies"
 		ul(class='nav navbar-nav')
 			li
-				a(href="/search")="Search"
+				a(href="/search")
+					span(class="glyphicon glyphicon-search")
+					="  Search"
+			li
+				if user
+					a(href="/profile")
+						span(class="glyphicon glyphicon-user")
+						="  My Profile"
 		ul(class='nav navbar-nav navbar-right')
 			li
 				if user
-					a(href="/profile")="My Profile"
+					a(class="navbar-brand" href="/profile")= "Hello " + user.displayName
 				else
-					a(href="/login/facebook")="Log In"
+					a(href="/login/facebook")
+						span(class="glyphicon glyphicon-log-in")
+						="  Login"

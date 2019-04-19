@@ -3,20 +3,21 @@ html
 		title Profile
 		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
 		link(rel='stylesheet', href='/css/style.css')
-	body
-		include ./navbar.pug
-		h1 Your Profile
-		if user
-			h2 Hello, #{user.displayName}.
-			if user.seenMovies
-				p= "You've seen:"
-				ul
-					each movie in user.seenMovies
-						li= movie.name
-			else
-				p= "You haven't seen any movies yet"
-		else
-			h2 Please log in to view your profile.
-			a(href="/login/facebook") Click here to log in with Facebook
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+	body
+		include ./navbar.pug
+		div(class='container-fluid')
+			h1 Your Profile
+			if user
+				h2 Hello, #{user.displayName}.
+				if user.seenMovies
+					p= "You've seen:"
+					ul
+						each movie in user.seenMovies
+							li= movie.name
+				else
+					p= "You haven't seen any movies yet"
+			else
+				h2 Please log in to view your profile.
+				a(href="/login/facebook") Click here to log in with Facebook
