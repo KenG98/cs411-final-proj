@@ -16,7 +16,9 @@ html
 					p= "Your movie list:"
 					ul 
 						each movieInList in user.watchList
-							li= movieInList.name	
+							li
+								button(onclick="removeWatchlistMovie(\"" + movieInList.imdbID + "\")")= "Remove"
+								span= movieInList.name
 				else 
 					p= "Go ahead and choose the movie you want to watch"
 
@@ -24,9 +26,33 @@ html
 					p= "You've seen:"
 					ul
 						each movie in user.seenMovies
-							li= movie.name
+							li
+								span
+									button(onclick="removeSeenMovie(\"" + movie.imdbID + "\")")= "Remove"
+									span= movie.name
+								
 				else
 					p= "You haven't seen any movies yet"
 			else
 				h2 Please log in to view your profile.
 				a(href="/login/facebook") Click here to log in with Facebook
+		if user
+			script.
+				console.log("Logged in...")
+				function removeWatchlistMovie(movieID) {
+					$.get("/api/removeMovie?listName=watchlist&movieID=" + movieID, (data) => {
+						console.log("Request is done. Returned:", data)
+						location.reload()
+					})
+				}
+				function removeSeenMovie(movieID) {
+					$.get("/api/removeMovie?listName=seenlist&movieID=" + movieID, (data) => {
+						console.log("Request is done. Returned:", data)
+						location.reload()
+					})
+				}
+		else
+			script.
+				console.log("Not logged in...")
+
+

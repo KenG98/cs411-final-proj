@@ -87,7 +87,21 @@ module.exports = function(app) {
     else {
       res.sendStatus(400)
     } 
-  
+  })
+
+  app.get('/api/removeMovie', (req, res) => {
+    if (req.user && req.query.movieID && req.query.listName) {
+      if (req.query.listName == "watchlist") {
+        mongoDB.removeWatchlistMovie(req.user.id, req.query.movieID)
+      }
+      else if (req.query.listName == "seenlist") {
+        mongoDB.removeSeenMovie(req.user.id, req.query.movieID) 
+      }
+      res.sendStatus(200)
+    }
+    else {
+      res.sendStatus(400)  
+    }
   })
 
 }

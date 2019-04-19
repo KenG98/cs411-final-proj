@@ -26,14 +26,14 @@ html
 								button(
 									type='button',
 									class='button',
-									id='watch-list-button',
+									id='watch-list-btn-' + movie.imdbID,
 									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'")'
 								)= "Add to Watch List"
 							p
 								button(
 									type='button',
 									class='button',
-									id='seen-button',
+									id='seen-list-btn-' + movie.imdbID,
 									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'")'
 								)= "I've seen this"
 							//- Genre and Director are not shown in the fuzzy search
@@ -56,6 +56,8 @@ html
 					console.log("Add to watch list", movieTitle, movieID)
 					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
 						console.log("Request is done. Returned:", data)
+						let watchButton = document.getElementById('watch-list-btn-' + movieID)
+						watchButton.innerHTML = "Added!"
 					})
 					
 				}
@@ -63,6 +65,8 @@ html
 					console.log("Add to seen list", movieTitle, movieID)
 					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
 						console.log("Request is done. Returned:", data)
+						let seenButton = document.getElementById('seen-list-btn-' + movieID)
+						seenButton.innerHTML = "Added!"
 					})
 				}
 		else 
@@ -70,5 +74,3 @@ html
 				function addToWatchList(movieTitle, movieID) { alert("Please log in to do that.") }
 				function addToSeenList(movieTitle, movieID) { alert("Please log in to do that.") }
 //- TODO: USER STORIES
-
-

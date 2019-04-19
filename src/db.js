@@ -10,7 +10,9 @@ module.exports = {  // pass to routes
   addUser,
   addSeenMovie,
   getUser, 
-  toWatchList
+  toWatchList,
+  removeSeenMovie,
+  removeWatchlistMovie
 }
 
 function setup(app) {
@@ -51,6 +53,36 @@ function addSeenMovie(userId, movieTitle, movieID) {
       name: movieTitle,
       imdbID: movieID
     })
+    userModel(usr).save((err) => {
+      if (err) throw err
+    })
+  })
+}
+
+function removeSeenMovie(userId, movieID) {
+  userModel.findOne({"_id": userId}, (err, usr) => {
+    let newList = []
+    usr.seenMovies.forEach(m => {
+      if (m.imdbID != movieID) {
+        newList.push(m)
+      }
+    })
+    usr.seenMovies = newList
+    userModel(usr).save((err) => {
+      if (err) throw err
+    })
+  })
+}
+
+function removeWatchlistMovie(userId, movieID) {
+  userModel.findOne({"_id": userId}, (err, usr) => {
+    let newList = []
+    usr.watchList.forEach(m => {
+      if (m.imdbID != movieID) {
+        newList.push(m)
+      }
+    })
+    usr.watchList = newList
     userModel(usr).save((err) => {
       if (err) throw err
     })
