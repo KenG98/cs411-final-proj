@@ -11,15 +11,15 @@ html
 			h1 Your Profile
 			if user
 				h2 Hello, #{user.displayName}.
-        
-        if user.watchList
-          p= "Your moive list:"
-          ul 
-            each movieInList in user.watchList
-              li= movieInList.name	
-        else 
-          p= "Go ahead and choose the movie you want to watch"
-        
+
+				if user.watchList
+					p= "Your movie list:"
+					ul 
+						each movieInList in user.watchList
+							li= movieInList.name	
+				else 
+					p= "Go ahead and choose the movie you want to watch"
+
 				if user.seenMovies
 					p= "You've seen:"
 					ul
