@@ -9,11 +9,15 @@ nav(class='navbar navbar-default')
 				a(href="/search")
 					span(class="glyphicon glyphicon-search")
 					="  Search"
-			li
-				if user
+			if user
+				li
 					a(href="/profile")
 						span(class="glyphicon glyphicon-user")
 						="  My Profile"
+			li
+				a(href="/recommend")
+					span(class="glyphicon glyphicon-star")
+					="  Recommend"
 		ul(class='nav navbar-nav navbar-right')
 			li
 				if user

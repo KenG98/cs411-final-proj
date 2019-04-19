@@ -68,6 +68,20 @@ module.exports = function(app) {
       res.render('profile')
     }
   })
+ 
+  // shows a dummy list of movies (request copied from search)
+  app.get('/recommend', function(req, res) {
+  	request(
+  		'http://www.omdbapi.com/?s=' + 'Star Wars' + '&apiKey=' + process.env.OMDB_API_KEY, 
+  		(error, response, body) => {
+				body = JSON.parse(body)
+				listOfMovies = body.Search
+  			res.render('recommend', {
+  				searchresult: listOfMovies,
+          user: req.user
+  			})
+  		});
+  })
 
   app.get('/api/addSeenMovie', (req, res) => {
     if (req.user && req.query.movieName && req.query.movieID) {
