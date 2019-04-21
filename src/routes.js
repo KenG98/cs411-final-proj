@@ -60,7 +60,20 @@ module.exports = function(app) {
           throw err
         }
         else {
-          res.render('profile', {user: usr})
+          let status = req.query.status
+
+          // determine type of list, default is watch list
+          let list = "Watch List"
+          let movieList = usr.watchList
+          if (status === "1") {
+            list = "Seen List"
+            movieList = usr.seenMovies;
+          }
+          res.render('profile', {
+            user: usr,
+            listOfMovies: movieList,
+            listType: list
+          })
         }
       })
     }
