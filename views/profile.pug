@@ -13,6 +13,7 @@ html
 				div(class="list-container")
 					div(id='profile-nav')
 						nav(class='navbar navbar-default')
+							//- change how movie navbar tab looks based on "listType"
 							ul(class='nav navbar-nav')
 								li
 									if listType === "Watch List"
@@ -44,9 +45,9 @@ html
 									td= "-"
 									td
 										if listType === "Watch List"
-											button(onclick="removeWatchlistMovie(\"" + movieInList.imdbID + "\")")= "Remove (watchlist)"
+											button(class="button button-delete", onclick="removeWatchlistMovie(\"" + movieInList.imdbID + "\")")= "Remove (watchlist)"
 										else if listType === "Seen List"
-											button(onclick="removeSeenMovie(\"" + movieInList.imdbID + "\")")= "Remove (seenlist)"
+											button(class="button button-delete", onclick="removeSeenMovie(\"" + movieInList.imdbID + "\")")= "Remove (seenlist)"
 			else
 				h2 Please log in to view your profile.
 				a(href="/login/facebook") Click here to log in with Facebook

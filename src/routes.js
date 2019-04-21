@@ -53,6 +53,8 @@ module.exports = function(app) {
   	}
   })
 
+  // may have query string "status". status=1 means display seen list
+  // if "status" query does not exist, display the watch list (default)
   app.get('/profile',function(req, res) {
     if (req.user) {
       mongoDB.getUser(req.user.id, (err, usr) => {
