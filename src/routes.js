@@ -97,8 +97,9 @@ module.exports = function(app) {
   })
 
   app.get('/api/addSeenMovie', (req, res) => {
-    if (req.user && req.query.movieName && req.query.movieID) {
-      mongoDB.addSeenMovie(req.user.id, req.query.movieName, req.query.movieID)
+    // note: posterURL will be the string "N/A" if movie has no poster
+    if (req.user && req.query.movieName && req.query.movieID && req.query.posterURL) {
+      mongoDB.addSeenMovie(req.user.id, req.query.movieName, req.query.movieID, req.query.posterURL)
       res.sendStatus(200)
     }
     else {
@@ -107,8 +108,8 @@ module.exports = function(app) {
   })
 
   app.get('/api/addToWatchList', (req, res) => {
-    if(req.user && req.query.movieName && req.query.movieID) {
-      mongoDB.toWatchList(req.user.id, req.query.movieName, req.query.movieID)
+    if(req.user && req.query.movieName && req.query.movieID && req.query.posterURL) {
+      mongoDB.toWatchList(req.user.id, req.query.movieName, req.query.movieID, req.query.posterURL)
       res.sendStatus(200)
     } 
     else {
