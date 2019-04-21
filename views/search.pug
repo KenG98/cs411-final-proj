@@ -27,14 +27,14 @@ html
 									type='button',
 									class='button',
 									id='watch-list-btn-' + movie.imdbID,
-									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'")'
+									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 								)= "Add to Watch List"
 							p
 								button(
 									type='button',
 									class='button',
 									id='seen-list-btn-' + movie.imdbID,
-									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'")'
+									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 								)= "I've seen this"
 							//- Genre and Director are not shown in the fuzzy search
 		script.
@@ -52,18 +52,18 @@ html
 			}
 		if user
 			script.	
-				function addToWatchList(movieTitle, movieID) {
+				function addToWatchList(movieTitle, movieID, posterURL) {
 					console.log("Add to watch list", movieTitle, movieID)
-					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
+					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
 						console.log("Request is done. Returned:", data)
 						let watchButton = document.getElementById('watch-list-btn-' + movieID)
 						watchButton.innerHTML = "Added!"
 					})
 					
 				}
-				function addToSeenList(movieTitle, movieID) {
+				function addToSeenList(movieTitle, movieID, posterURL) {
 					console.log("Add to seen list", movieTitle, movieID)
-					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
+					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
 						console.log("Request is done. Returned:", data)
 						let seenButton = document.getElementById('seen-list-btn-' + movieID)
 						seenButton.innerHTML = "Added!"
