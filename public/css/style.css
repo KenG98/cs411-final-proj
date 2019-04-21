@@ -1,4 +1,4 @@
-* {
+	* {
 	font-family: arial; /* change font for whole page */
 }
 
@@ -10,13 +10,23 @@ form {
 	width:700px;
 	margin:25px auto;
 }
-
+.container-search{
+	margin-top: 160px;
+}
 .search {
 	width: 600px;
+	border-radius: 8px;
+	height: 36px; 
+	text-align:center;
+	border-color: black; 
+	
 }
 
 .button {
-	padding:6px 15px;
+	padding: px 15px;
+	border-radius: 8px;
+	height: 36px; 
+	text-align: center;
 	border:2px solid #207cca;
 	background-color:#207cca;
 	color:#fafafa;
