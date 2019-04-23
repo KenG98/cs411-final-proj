@@ -10,7 +10,7 @@ form {
 	width:700px;
 	margin:25px auto;
 }
-.container-search{
+#container-search{
 	margin-top: 160px;
 }
 .search {
@@ -44,8 +44,16 @@ form {
 
 .movie-poster img {
 	float: left;
+	
 }
 
 .movie-details {
 	margin-left: 340px;
+}
+
+.thumbnail img {
+	max-width:  150px;
+}
+.button {
+	float: right;	
 }
