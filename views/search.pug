@@ -8,6 +8,7 @@ html
 	body
 		include ./navbar.pug
 		div(class='container-fluid')
+
 			<div id="container-search">
 				h1 Find a Movie
 				form
@@ -38,6 +39,7 @@ html
 										onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'")'
 									)= "I've seen this"
 								//- Genre and Director are not shown in the fuzzy search
+
 		script.
 			// allow the enter key to search for a movie
 			let searchField = $('#search-field')[0]
@@ -53,18 +55,18 @@ html
 			}
 		if user
 			script.	
-				function addToWatchList(movieTitle, movieID) {
+				function addToWatchList(movieTitle, movieID, posterURL) {
 					console.log("Add to watch list", movieTitle, movieID)
-					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
+					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
 						console.log("Request is done. Returned:", data)
 						let watchButton = document.getElementById('watch-list-btn-' + movieID)
 						watchButton.innerHTML = "Added!"
 					})
 					
 				}
-				function addToSeenList(movieTitle, movieID) {
+				function addToSeenList(movieTitle, movieID, posterURL) {
 					console.log("Add to seen list", movieTitle, movieID)
-					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID, (data) => {
+					$.get("/api/addSeenMovie?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
 						console.log("Request is done. Returned:", data)
 						let seenButton = document.getElementById('seen-list-btn-' + movieID)
 						seenButton.innerHTML = "Added!"
