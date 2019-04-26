@@ -48,8 +48,10 @@ form {
 .thumbnail img {
 	max-width:  150px;
 }
+
 .button {
 	float: right;	
+}
 
 .container-fluid .list-container {
 	margin-left: auto;
