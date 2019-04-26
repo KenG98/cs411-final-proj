@@ -9,15 +9,12 @@ module.exports = {
 	passport,
 	users
 }
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 })
-
 passport.deserializeUser(function(user, done) {
   done(null, user);
 })
-
 passport.use(
 	new FacebookStrategy({
 		clientID: process.env.FACEBOOK_APP_ID,
