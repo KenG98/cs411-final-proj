@@ -19,7 +19,7 @@ imdb_ratings = np.array(movies_df["Imdb"])
 
 votes = np.array(movies_df["Votes"])
 
-weighted = votes*imdb_ratings
+weighted = imdb_ratings
 
 movies = list(zip(clusters,imdbID,weighted))
 
