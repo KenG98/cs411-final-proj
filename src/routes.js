@@ -52,8 +52,6 @@ module.exports = function(app) {
   	}
   })
 
-  // may have query string "status". status=1 means display seen list
-  // if "status" query does not exist, display the watch list (default)
   app.get('/profile',function(req, res) {
     if (req.user) {
       mongoDB.getUser(req.user.id, (err, usr) => {
@@ -61,20 +59,7 @@ module.exports = function(app) {
           throw err
         }
         else {
-          let status = req.query.status
-
-          // determine type of list, default is watch list
-          let list = "Watch List"
-          let movieList = usr.watchList
-          if (status === "1") {
-            list = "Seen List"
-            movieList = usr.seenMovies;
-          }
-          res.render('profile', {
-            user: usr,
-            listOfMovies: movieList,
-            listType: list
-          })
+          res.render('profile', {user: usr})
         }
       })
     }
@@ -107,9 +92,8 @@ module.exports = function(app) {
   })
 
   app.get('/api/addSeenMovie', (req, res) => {
-    // note: posterURL will be the string "N/A" if movie has no poster
-    if (req.user && req.query.movieName && req.query.movieID && req.query.posterURL) {
-      mongoDB.addSeenMovie(req.user.id, req.query.movieName, req.query.movieID, req.query.posterURL)
+    if (req.user && req.query.movieName && req.query.movieID) {
+      mongoDB.addSeenMovie(req.user.id, req.query.movieName, req.query.movieID)
       res.sendStatus(200)
     }
     else {
@@ -118,8 +102,8 @@ module.exports = function(app) {
   })
 
   app.get('/api/addToWatchList', (req, res) => {
-    if(req.user && req.query.movieName && req.query.movieID && req.query.posterURL) {
-      mongoDB.toWatchList(req.user.id, req.query.movieName, req.query.movieID, req.query.posterURL)
+    if(req.user && req.query.movieName && req.query.movieID) {
+      mongoDB.toWatchList(req.user.id, req.query.movieName, req.query.movieID)
       res.sendStatus(200)
     } 
     else {
