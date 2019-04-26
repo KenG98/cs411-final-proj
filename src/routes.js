@@ -2,6 +2,7 @@
 const request = require('request');
 const fbAuth = require('./facebook_auth.js')
 const mongoDB = require('./db') // require db to routes.js
+
 module.exports = function(app) {
   // useful middleware for express
   app.use(require('morgan')('combined')); 
@@ -73,19 +74,10 @@ module.exports = function(app) {
   	request(
   		'http://www.omdbapi.com/?s=' + 'Star Wars' + '&apiKey=' + process.env.OMDB_API_KEY, 
   		(error, response, body) => {
-
-        body = JSON.parse(body)
-        listOfMovies = body.Search
-        var movieChunks = [];
-        var chunkSize = 3; 
-        for(var i = 0; i < listOfMovies.length; i+=chunkSize){
-            movieChunks.push(listOfMovies.slice(i, i+chunkSize));
-        }
-        //console.log( movieChunks ,"******* 7 *****");
-
- 
+				body = JSON.parse(body)
+				listOfMovies = body.Search
   			res.render('recommend', {
-  				searchresult: movieChunks,
+  				searchresult: listOfMovies,
           user: req.user
   			})
   		});
@@ -127,7 +119,5 @@ module.exports = function(app) {
   })
 
 }
-
-
 
 
