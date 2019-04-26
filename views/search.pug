@@ -27,14 +27,14 @@ html
 									type='button',
 									class='button',
 									id='watch-list-btn-' + movie.imdbID,
-									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'")'
+									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 								)= "Add to Watch List"
 							p
 								button(
 									type='button',
 									class='button',
 									id='seen-list-btn-' + movie.imdbID,
-									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'")'
+									onclick='addToWatchList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 								)= "I've seen this"
 							//- Genre and Director are not shown in the fuzzy search
 		script.
