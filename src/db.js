@@ -35,11 +35,12 @@ function getUser(usrId, done) {
   // })
 }
 
-function toWatchList(userId, movieTitle, movieID) {
+function toWatchList(userId, movieTitle, movieID, posterURL) {
   userModel.findOne({ "_id": userId}, (err, usr) => {
     usr.watchList.push({ 
       name: movieTitle, 
-      imdbID: movieID
+      imdbID: movieID,
+      poster: posterURL
     })
     userModel(usr).save((err) => {
       if(err) throw err
@@ -47,11 +48,12 @@ function toWatchList(userId, movieTitle, movieID) {
   })
 }
 
-function addSeenMovie(userId, movieTitle, movieID) {
+function addSeenMovie(userId, movieTitle, movieID, posterURL) {
   userModel.findOne({"_id": userId}, (err, usr) => {
     usr.seenMovies.push({
       name: movieTitle,
-      imdbID: movieID
+      imdbID: movieID,
+      poster: posterURL
     })
     userModel(usr).save((err) => {
       if (err) throw err
