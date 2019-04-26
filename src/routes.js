@@ -62,7 +62,7 @@ module.exports = function(app) {
           throw err
         }
         else {
-          let status = req.query.status
+          let status = req.query.status // determines which list to show 
 
           // determine type of list, default is watch list
           let list = "Watch List"
@@ -86,16 +86,38 @@ module.exports = function(app) {
  
   // shows a dummy list of movies (request copied from search)
   app.get('/recommend', function(req, res) {
-  	request(
-  		'http://www.omdbapi.com/?s=' + 'Star Wars' + '&apiKey=' + process.env.OMDB_API_KEY, 
-  		(error, response, body) => {
-				body = JSON.parse(body)
-				listOfMovies = body.Search
-  			res.render('recommend', {
-  				searchresult: listOfMovies,
-          user: req.user
-  			})
-  		});
+    if (req.user) {
+      mongoDB.getUser(req.user.id, (err, usr) => {
+        if (err) {
+          throw err
+        }
+        else {
+          let watchList = usr.watchList
+          let seenList = usr.seenMovies
+          // for (let movie of watchList) {
+            let movie = watchList[0]
+            request('https://api.themoviedb.org/3/movie/'+ movie.imdbID + '?api_key=' + process.env.TMDB_API_KEY, 
+              (error, response, body) => {
+                body = JSON.parse(body)
+                let movieID = body.id
+                request('https://api.themoviedb.org/3/movie/'+ movieID + '/recommendations?api_key=' + process.env.TMDB_API_KEY, 
+                  (error, response, body) => {
+                    body = JSON.parse(body)
+                    let listOfMovies = body.results
+                    console.log(listOfMovies);
+                    res.render('recommend', {
+                      searchresult: listOfMovies,
+                      user: req.user
+                    })
+                  })
+              })
+          
+          // }
+        }
+      })
+    } else {
+      res.render('profile')
+    }
   })
 
   app.get('/api/addSeenMovie', (req, res) => {
