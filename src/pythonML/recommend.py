@@ -2,15 +2,19 @@ import pandas as pd
 import numpy as np
 import sys
 import operator
+import os
 
-movies_df = pd.read_csv("clustered_movie_ratings_1960-2019.csv", encoding = "ISO-8859-1")
+# get the absolute path to the file so this script can be run from anywhere
+(dirname, _) = os.path.split(os.path.abspath(sys.argv[0]))
+cluster_file = os.path.join(dirname, "clustered_movie_ratings_1960-2019.csv")
+
+movies_df = pd.read_csv(cluster_file, encoding = "ISO-8859-1")
 
 clusters = np.array(movies_df["Cluster"])
 
 imdbID = np.array(movies_df["IMDb ID"])
 
 watched = sys.argv[1]
-
 watched = np.array(watched.split(','))
 
 watched = np.array(list(dict.fromkeys(watched)))
@@ -45,6 +49,8 @@ finalRecommend = []
 for i in range(len(recommend)):
 	finalRecommend.append(recommend[i][1])
 
+# David: it tells me that the movies in "watched" are not in finalRecommend
+# might have to comment out to get it to run
 for i in range(watched.size):
 	finalRecommend.remove(watched[i])
 
