@@ -113,6 +113,7 @@ module.exports = function(app) {
   // calls a python program to recommend movies based on what the user's seen
   app.get('/recommend', function(req, res) {
     if (req.user) {
+      // get user information
       mongoDB.getUser(req.user.id, (err, usr) => {
         if (err) {
           throw err
@@ -125,30 +126,36 @@ module.exports = function(app) {
           for (let movie of seenList) {
             movieList.push(movie.imdbID)
           }
+
+          // call an external python program that returns a list of movie ids
           const recommend = spawn('python', [pythonProgramPath, movieList])
           recommend.on('error', (err) => {
             console.log('Failed to start subprocess.');
             res.render('recommend', { user: usr })
           });
+
+          // use output of python program
           recommend.stdout.on('data', (data) => {
             data = String(data)
             data = data.replace(/[\n\r]/g, '') // remove newlines
             let listOfIDs = String(data).split(',');
             let movieResults = []
             let completed = 0;
+
+            // make an omdbapi request for every recommended movie
             for (let id of listOfIDs) {
-              request(
-                'http://www.omdbapi.com/?i=' + id + '&apiKey=' + process.env.OMDB_API_KEY,
-                (error, response, body) => {
-                  body = JSON.parse(body)
-                  movieResults.push(body)
-                  if (++completed == listOfIDs.length) {
-                    res.render('recommend', {
-                      user: usr,
-                      searchresult: movieResults
-                    })
-                  }
-                })
+              request('http://www.omdbapi.com/?i=' + id + '&apiKey=' + process.env.OMDB_API_KEY, (error, response, body) => {
+                body = JSON.parse(body)
+                movieResults.push(body)
+
+                // wait for all requests to finish before rendering page
+                if (++completed == listOfIDs.length) {
+                  res.render('recommend', {
+                    user: usr,
+                    searchresult: movieResults
+                  })
+                }
+              })
             }
           });
         }
