@@ -51,8 +51,8 @@ for i in range(len(recommend)):
 
 # David: it tells me that the movies in "watched" are not in finalRecommend
 # might have to comment out to get it to run
-for i in range(watched.size):
-	finalRecommend.remove(watched[i])
+# for i in range(watched.size):
+# 	finalRecommend.remove(watched[i])
 
 movieList = ""
 if(len(finalRecommend) < 25):

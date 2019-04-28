@@ -13,7 +13,7 @@ html
 				input(type='text', class='search', id='search-field')
 				button(type='button', class='button', id='search-button', onclick='doSearch()')= "Search"
 			if searchresult
-				each movie in searchresult 
+				each movie in searchresult
 					div(class='movie-info')
 						div(class='movie-poster')
 							img(src=movie.Poster, alt='Movie Poster')
@@ -36,7 +36,9 @@ html
 									id='seen-list-btn-' + movie.imdbID,
 									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 								)= "I've seen this"
-							//- Genre and Director are not shown in the fuzzy search
+			else if moviename
+				h3 No results were found for #{moviename}
+
 		script.
 			// allow the enter key to search for a movie
 			let searchField = $('#search-field')[0]
@@ -51,7 +53,7 @@ html
 				location.href = "/search?moviename=" + moviename
 			}
 		if user
-			script.	
+			script.
 				function addToWatchList(movieTitle, movieID, posterURL) {
 					console.log("Add to watch list", movieTitle, movieID)
 					$.get("/api/addToWatchList?movieName=" + movieTitle + "&movieID=" + movieID + "&posterURL=" + posterURL, (data) => {
@@ -59,7 +61,7 @@ html
 						let watchButton = document.getElementById('watch-list-btn-' + movieID)
 						watchButton.innerHTML = "Added!"
 					})
-					
+
 				}
 				function addToSeenList(movieTitle, movieID, posterURL) {
 					console.log("Add to seen list", movieTitle, movieID)
@@ -69,7 +71,7 @@ html
 						seenButton.innerHTML = "Added!"
 					})
 				}
-		else 
+		else
 			script.
 				function addToWatchList(movieTitle, movieID) { alert("Please log in to do that.") }
 				function addToSeenList(movieTitle, movieID) { alert("Please log in to do that.") }

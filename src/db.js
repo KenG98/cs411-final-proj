@@ -2,6 +2,7 @@
 // const Product = require('../models/movie');
 const mongoose = require('mongoose');
 const userModel = require('../models/user.js')
+const searchModel = require('../models/search.js')
 
 mongoose.connect('mongodb://localhost:27017/Movies', { useNewUrlParser: true } );
 
@@ -9,10 +10,12 @@ module.exports = {  // pass to routes
 	setup,
   addUser,
   addSeenMovie,
-  getUser, 
+  getUser,
   toWatchList,
   removeSeenMovie,
-  removeWatchlistMovie
+  removeWatchlistMovie,
+  addSearch,
+  getSearch
 }
 
 function setup(app) {
@@ -37,8 +40,8 @@ function getUser(usrId, done) {
 
 function toWatchList(userId, movieTitle, movieID, posterURL) {
   userModel.findOne({ "_id": userId}, (err, usr) => {
-    usr.watchList.push({ 
-      name: movieTitle, 
+    usr.watchList.push({
+      name: movieTitle,
       imdbID: movieID,
       poster: posterURL
     })
@@ -104,7 +107,24 @@ function addUser(userObj) {
       })
       thisUser.save((err) => {
         if (err) throw err
-      })    
-    } 
+      })
+    }
   })
 }
+
+// call this to cache search results
+function addSearch(searchObj) {
+  let search = new searchModel({
+    _id: searchObj.query,
+    results: searchObj.results
+  })
+  search.save((err) => {
+    if (err) throw err
+  })
+}
+
+// call this to look up searches in the db before calling omdbapi
+function getSearch(searchQuery, done) {
+  searchModel.findOne({"_id": searchQuery}, (err, usr) => done(err, usr))
+}
+
