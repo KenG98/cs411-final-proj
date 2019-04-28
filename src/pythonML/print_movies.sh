@@ -1,6 +1,6 @@
 #!/bin/bash
-echo "Recommendations for Inception:"
-OUT="$(python recommend.py tt5295894)"
+echo "Recommendations:"
+OUT="$(python recommend.py ,)"
 arrOUT=(${OUT//,/ })
 for i in "${arrOUT[@]}"
 do

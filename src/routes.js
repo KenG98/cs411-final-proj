@@ -3,6 +3,7 @@ const request = require('request');
 const fbAuth = require('./facebook_auth.js')
 const mongoDB = require('./db') // require db to routes.js
 const { spawn } = require('child_process'); // for running external scripts
+const pythonProgramPath = './src/pythonML/recommend.py'
 
 module.exports = function(app) {
   // useful middleware for express
@@ -109,18 +110,53 @@ module.exports = function(app) {
     }
   })
 
-  // shows a dummy list of movies (request copied from search)
+  // calls a python program to recommend movies based on what the user's seen
   app.get('/recommend', function(req, res) {
-    request(
-      'http://www.omdbapi.com/?s=' + 'Star Wars' + '&apiKey=' + process.env.OMDB_API_KEY,
-      (error, response, body) => {
-        body = JSON.parse(body)
-        listOfMovies = body.Search
-        res.render('recommend', {
-           searchresult: listOfMovies,
-           user: req.user
-        })
-    });
+    if (req.user) {
+      mongoDB.getUser(req.user.id, (err, usr) => {
+        if (err) {
+          throw err
+        }
+        else {
+          let seenList = usr.seenMovies
+          let movieList = []
+          // construct input to python program based on user's seenMovies
+          // if user has no seen movies, give them default recommendations
+          for (let movie of seenList) {
+            movieList.push(movie.imdbID)
+          }
+          const recommend = spawn('python', [pythonProgramPath, movieList])
+          recommend.on('error', (err) => {
+            console.log('Failed to start subprocess.');
+            res.render('recommend', { user: usr })
+          });
+          recommend.stdout.on('data', (data) => {
+            data = String(data)
+            data = data.replace(/[\n\r]/g, '') // remove newlines
+            let listOfIDs = String(data).split(',');
+            let movieResults = []
+            let completed = 0;
+            for (let id of listOfIDs) {
+              request(
+                'http://www.omdbapi.com/?i=' + id + '&apiKey=' + process.env.OMDB_API_KEY,
+                (error, response, body) => {
+                  body = JSON.parse(body)
+                  movieResults.push(body)
+                  if (++completed == listOfIDs.length) {
+                    res.render('recommend', {
+                      user: usr,
+                      searchresult: movieResults
+                    })
+                  }
+                })
+            }
+          });
+        }
+      })
+    } else {
+      // redirect to login prompt
+      res.render('profile')
+    }
   })
 
   app.get('/api/addSeenMovie', (req, res) => {

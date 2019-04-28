@@ -49,17 +49,12 @@ finalRecommend = []
 for i in range(len(recommend)):
 	finalRecommend.append(recommend[i][1])
 
-# David: it tells me that the movies in "watched" are not in finalRecommend
-# might have to comment out to get it to run
-# for i in range(watched.size):
-# 	finalRecommend.remove(watched[i])
+for movieID in watched:
+	if movieID in finalRecommend:
+		finalRecommend.remove(movieID)
 
 movieList = ""
-if(len(finalRecommend) < 25):
-	for i in range(len(finalRecommend)):
-		movieList = movieList + finalRecommend[i] + ","
-else:
-	for i in range(25):
-		movieList = movieList + finalRecommend[i]
+for item in finalRecommend:
+	movieList += item + ','
 movieList = movieList[:-1]
 print(movieList)
