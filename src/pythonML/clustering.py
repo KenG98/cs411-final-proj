@@ -3,6 +3,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import adjusted_rand_score
 import pandas as pd
 import numpy as np
+import re
 
 ##characters I have to scrub through for when re-doing the scrubbing and adding new movies: ø and a with accent on it
 
@@ -36,20 +37,21 @@ movie_vector = []
 for i in range(actors.size):
 	string = ''
 	string = str(genre[i])+','+str(actors[i])+','+str(director[i])+','+str(rating[i])+','+str(year[i])
+	string = re.sub(r'\s+', '', string)
 	movie_vector.append(string)
 
 
 vectorizer = TfidfVectorizer(stop_words='english')
 X = vectorizer.fit_transform(movie_vector)
 
-#so far 180 is the best number
-#200 is too high sometimes
-true_k = 180
+#so far 160 is the best number but over clustering
+#170 is too high 
+true_k = 140
 model = KMeans(n_clusters=true_k, init='k-means++', max_iter=100, n_init=1)
 model.fit(X)
 
 #print("Top terms per cluster:")
-#order_centroids = model.cluster_centers_.argsort()[:, ::-1]
+#order_centroids = model.clster_centers_.argsort()[:, ::-1]
 
 #print(order_centroids,"centroids")
 #terms = vectorizer.get_feature_names()
