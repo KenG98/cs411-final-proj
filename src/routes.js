@@ -2,6 +2,7 @@
 const request = require('request');
 const fbAuth = require('./facebook_auth.js')
 const mongoDB = require('./db') // require db to routes.js
+const tmdb = require('./tmdb.js')
 const { spawn } = require('child_process'); // for running external scripts
 const pythonProgramPath = './src/pythonML/recommend.py'
 
@@ -139,24 +140,26 @@ module.exports = function(app) {
             data = String(data)
             data = data.replace(/[\n\r]/g, '') // remove newlines
             let listOfIDs = String(data).split(',');
-            let movieResults = []
-            let completed = 0;
-
-            // make an omdbapi request for every recommended movie
-            for (let id of listOfIDs) {
-              request('http://www.omdbapi.com/?i=' + id + '&apiKey=' + process.env.OMDB_API_KEY, (error, response, body) => {
-                body = JSON.parse(body)
-                movieResults.push(body)
-
-                // wait for all requests to finish before rendering page
-                if (++completed == listOfIDs.length) {
-                  res.render('recommend', {
-                    user: usr,
-                    searchresult: movieResults
-                  })
-                }
-              })
-            }
+            // get all of the trailers for the above movies
+            tmdb.getTrailers(listOfIDs, (trailerIDs) => {
+              let movieResults = []
+              let completed = 0;
+              // make an omdbapi request for every recommended movie
+              for (let id of listOfIDs) {
+                request('http://www.omdbapi.com/?i=' + id + '&apiKey=' + process.env.OMDB_API_KEY, (error, response, body) => {
+                  body = JSON.parse(body)
+                  movieResults.push(body)
+                  // wait for all requests to finish before rendering page
+                  if (++completed == listOfIDs.length) {
+                    res.render('recommend', {
+                      user: usr,
+                      searchresult: movieResults,
+                      trailers: trailerIDs
+                    })
+                  }
+                })
+              }
+            })
           });
         }
       })

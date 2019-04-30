@@ -33,8 +33,20 @@ html
 									id='seen-list-btn-' + movie.imdbID,
 									onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 								)= "I've seen this"
+							if movie.imdbID in trailers
+								div(class="movie-trailer")
+									iframe(
+										width="560",
+										height="315",
+										src="https://www.youtube.com/embed/" + trailers[movie.imdbID],
+										frameborder="0",
+										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+										allowfullscreen
+									)
+							else
+								p= "No Trailer Available."
 			else
-				h3 No recommendations found! Try add movies to your seen list
+				h3 No recommendations found! Try adding movies to your seen list
 		if user
 			script.
 				function addToWatchList(movieTitle, movieID, posterURL) {
