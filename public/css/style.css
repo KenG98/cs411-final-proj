@@ -115,3 +115,15 @@ form {
 #profile-table th + th {
 	border-left:2px solid #ebebeb;
 }
+.thumbnail-recommend img {
+	max-width:  250px;
+	display: block;
+    margin:auto;	
+}
+.thumbnail-recommend {
+	margin: 15px;
+	border: 10px;
+} */
+.row-recommend{
+	margin: 10px;
+}

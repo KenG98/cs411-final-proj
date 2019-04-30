@@ -151,9 +151,17 @@ module.exports = function(app) {
                   movieResults.push(body)
                   // wait for all requests to finish before rendering page
                   if (++completed == listOfIDs.length) {
+                    
+                    var movieChunks = [];
+                    var chunkSize = 3; 
+                    for(var i = 0; i < movieResults.length; i+=chunkSize){
+                        movieChunks.push(movieResults.slice(i, i+chunkSize));
+                        //console.log(i , "************ & " );
+                    }
+                    
                     res.render('recommend', {
                       user: usr,
-                      searchresult: movieResults,
+                      searchresult: movieChunks,
                       trailers: trailerIDs
                     })
                   }
