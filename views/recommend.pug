@@ -24,18 +24,7 @@ html
 													h4 Year:
 													p= movie.Year	
 
-													if movie.imdbID in trailers
-														div(class="movie-trailer")
-															iframe(
-																width="560",
-																height="315",
-																src="https://www.youtube.com/embed/" + trailers[movie.imdbID],
-																frameborder="0",
-																allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-																allowfullscreen
-															)
-													else
-													p= "No Trailer Available."
+												
 													<div class= "pull-left">	
 														button(
 															type='button',
@@ -56,7 +45,19 @@ html
 															
 														</div>
 													</div>
-	
+														if movie.imdbID in trailers
+															div(class="movie-trailer")
+																iframe(
+																	width="365",
+																	height="300",
+																	src="https://www.youtube.com/embed/" + trailers[movie.imdbID],
+																	frameborder="15px",
+																	allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+																	allowfullscreen
+																)
+														else
+															p= "No Trailer Available."
+		
 												</div>
 											</div>
 										</div>
