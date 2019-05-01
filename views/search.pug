@@ -10,7 +10,7 @@ html
 		div(class='container-fluid')
 			h1 Find a Movie
 			form
-				input(type='text', class='search', id='search-field')
+				input(type='text', class='search', id='search-field', placeholder= "              search loved movie" )
 				button(type='button', class='button', id='search-button', onclick='doSearch()')= "Search"
 			if searchresult
 				each movie in searchresult

@@ -133,3 +133,7 @@ form {
 	max-width: 250px ;
 	margin: 5px;
 }
+#search-field.search{
+	border-radius: 1px;
+	text-align: center; 
+}
