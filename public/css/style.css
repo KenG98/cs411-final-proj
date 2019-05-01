@@ -20,8 +20,7 @@ form {
 	border:2px solid #207cca;
 	background-color:#207cca;
 	color:#fafafa;
-	
-	
+	border-radius: 8px;
 }
 
 .button-delete {
