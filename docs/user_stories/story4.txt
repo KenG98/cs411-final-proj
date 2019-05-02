@@ -1,7 +1,5 @@
 Get a Recommendation
 
-The “get a movie recommendation” button will pull up a text field that lets the user enter keywords, including genres, years, actors, and other movie titles. There will be a “help” button that describes how to use this bar, because users may not understand how to format a query. A query will look like “90s comedy like groundhog day”, or “romance with Leonardo Dicaprio”.
+The “get a movie recommendation” button will pull up a page with a list of recommendations for them based on movies they've seen, using factors like actors, directors, and genre to make those recs.
 
-Once a user hits enter, under the search bar they’ll get a short description of their search result so that they can be sure they entered the query correctly. This might look like “tags” similar to, [“90s”, “comedy”, “groundhog day”], or [“leonardo dicaprio”, “romance”].
-
-Beneath the search bar you’ll get a list of search results. This will include movie thumbnail, title, year, and maybe one or two starring actors. To the right of the result will be a button to add the movie to your watchlist, a button to write that you’ve seen the movie (and add it to your seen-list), and a button to remove the recommendation (this action will be memorized for future recommendations).
+On the recommend page you can add movies to your seen list to improve recommendations or add them to your watch list so you don't forget them.

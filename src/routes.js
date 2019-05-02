@@ -23,14 +23,7 @@ module.exports = function(app) {
 
 
   app.get('/', function(req, res) {
-    res.render('index', {
-      randnum: Math.floor(Math.random()*100),
-      message: process.env.OTHER_CONFIG,
-    })
-  })
-
-  app.get('/other', function(req, res) {
-    res.render('testpage')
+    res.redirect('/profile')
   })
 
   // a user hits this endpoint to search for a movie
@@ -158,7 +151,6 @@ module.exports = function(app) {
                         movieChunks.push(movieResults.slice(i, i+chunkSize));
                         
                     }
-                    //console.log(trailerIDs);
                     res.render('recommend', {
                       user: usr,
                       searchresult: movieChunks,

@@ -1,3 +1,5 @@
-Give a Rating
+Manage Your Lists
 
-As a user who has logged in (Story 2), I should be able to click on a link on my homepage (Story 3) and see my list of watched movies. I should be able to rate each watched movie out of 5 stars. Each movie should have a star rating field next to it. I should be able to click on the field to rate the movie, and reclick to remove the rating. I should be able to give half star ratings as well (eg. 3.5 stars). The lowest rating I will be able to give is 1 star, and the highest rating will be 5 stars. 
+You may get multiple recommendations you want to watch. By adding a movie to your watchlist, you can keep track of what you’d like to see. From this list you can click that you’ve seen a movie (moving it to your seen-list) or you can remove it from your watchlist. 
+
+Similarly, you have a seen-list of movies you've seen. You can add and remove items on this list. The recommendation algorithm uses this list to recommend new films.
