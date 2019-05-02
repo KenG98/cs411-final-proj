@@ -24,7 +24,7 @@ html
 													h4 Year:
 													p= movie.Year	
 
-												
+
 													<div class= "pull-left">	
 														button(
 															type='button',
@@ -42,7 +42,7 @@ html
 																	id='seen-list-btn-' + movie.imdbID,
 																	onclick='addToSeenList("'+movie.Title+'","'+movie.imdbID+'","'+movie.Poster+'")'
 																)= "I've seen this"
-															
+		
 														</div>
 													</div>
 														if movie.imdbID in trailers
@@ -69,8 +69,6 @@ html
 				h3 No recommendations found! Try adding movies to your seen list
 
 		</div>
-
-
 		if user
 			script.
 				function addToWatchList(movieTitle, movieID, posterURL) {

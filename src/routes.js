@@ -158,7 +158,7 @@ module.exports = function(app) {
                         movieChunks.push(movieResults.slice(i, i+chunkSize));
                         
                     }
-                    console.log(trailerIDs);
+                    //console.log(trailerIDs);
                     res.render('recommend', {
                       user: usr,
                       searchresult: movieChunks,
